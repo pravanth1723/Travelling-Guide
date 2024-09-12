@@ -1,0 +1,168 @@
+/* General styling for body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgb(0,0,0,0.1);
+    justify-content: center;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url("6345959.jpg");
+    background-size: cover;
+   
+    /* background-color: #f4f4f4; */
+}
+
+/* Styling for headers */
+h1 {
+    background: linear-gradient(to left top, #4ad3d3, #af1cbd);
+    color: black;
+    text-align: center;
+    font-size:xx-large;
+    font-weight: 300;
+    padding: 5px;
+/* margin: 1% 30%; */
+    border-radius: 5px;
+    align-content: center;
+    border: 2p solid black;
+}
+
+/* Styling for labels */
+label {
+    font-size: 2em;
+    font-size: xx-large;
+    margin: 10px;
+    font-weight: 200;
+}
+
+/* Styling for select and input elements */
+input{
+    background: #f1f1f1;
+    padding: 5px;
+    font-size: large;
+    width: 100px;
+}
+select{
+    width: 200px;
+    padding: 10px;
+    font-size: large;
+}
+
+/* Styling for buttons */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1em;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for the dropdowns container */
+#stationDropdowns {
+    margin: 20px 0;
+}
+
+/* Styling for selected stations list */
+#selectedStationsList, #cityHotelsList {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+#selectedStationsList{
+    flex-direction: row;
+    
+}
+#selectedStationsList li, #cityHotelsList li {
+    background:linear-gradient(to right top, #9de546, #e2480bcd);
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 5px ;
+    width: fit-content;
+    font-size: large;font-weight: 200;
+        border-radius: 5px;
+
+}
+#cityHotelsList li {
+    border: 2px solid black;
+    border-radius: 2px;
+}
+/* Styling for the route container */
+#route {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 10px;
+    font-size: larger;
+    /* background-color: #fff; */
+    
+    /* border: 1px solid #ddd;
+    border-radius: 5px; */
+}
+#route ul {
+    
+    display: flex;
+    list-style: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+#route ul li,#details{
+    padding: 20px;
+    margin: 5px;
+    font-size: large;
+    border: 2px solid black;
+    border-radius: 2px;
+    background:linear-gradient(to right, #ff7e5f, #3899bc);
+    
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#route ul .city{
+    background: linear-gradient(to right bottom, #3899bc,#3899bc);
+    border: 2px solid black;
+    font-weight: 300;
+    font-size: larger;
+}
+#cityHotelsList li{
+    font-size: large;
+    list-style: none;
+    background:linear-gradient(to right, #75d757, #23718e);
+}
+#est{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+.spinner {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin-top: 10px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

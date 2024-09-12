@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traveling Salesman Problem</title>
+</head>
+<style>
+    .spinner {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+</style>
+<body>
+    <div class="spinner">loading</div>
+
+    <h1>Traveling Salesman Problem Solver</h1>
+
+    <p id="result"></p>
+
+    <script>
+        // Predefined distance matrix
+        // function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const distanceMatrix = params.get('dmat');
+            // const age = params.get('age');
+            // return { name, age };
+        // }
+
+        // Display the received data
+        // const data = getQueryParams();
+        // const distanceMatrix =localStorage.getItem('distanceMatrix');
+
+        const n = distanceMatrix.length;
+        const INF = Infinity;
+        let dp, path;
+
+        function initializeDP() {
+            dp = Array.from({ length: 1 << n }, () => Array(n).fill(-1));
+            path = Array.from({ length: 1 << n }, () => Array(n).fill(-1));
+        }
+
+        function tsp(mask, pos) {
+            if (mask === (1 << n) - 1) {
+                return distanceMatrix[pos][0];
+            }
+
+            if (dp[mask][pos] !== -1) {
+                return dp[mask][pos];
+            }
+
+            let ans = INF;
+            let bestNextCity = -1;
+
+            for (let city = 0; city < n; city++) {
+                if (!(mask & (1 << city))) {
+                    let newCost = distanceMatrix[pos][city] + tsp(mask | (1 << city), city);
+                    if (newCost < ans) {
+                        ans = newCost;
+                        bestNextCity = city;
+                    }
+                }
+            }
+
+            path[mask][pos] = bestNextCity;
+            return dp[mask][pos] = ans;
+        }
+
+        function solveTSP() {
+            initializeDP();
+            const result = tsp(1, 0);
+            let optimalPath = [0];
+            let mask = 1;
+            let currentCity = 0;
+
+            while (mask !== (1 << n) - 1) {
+                let nextCity = path[mask][currentCity];
+                optimalPath.push(nextCity);
+                mask |= (1 << nextCity);
+                currentCity = nextCity;
+            }
+            optimalPath.push(0);  // Return to the starting city
+
+            document.getElementById("result").innerHTML = `
+                <strong>Minimum cost:</strong> ${result} <br/>
+                <strong>Optimal path:</strong> ${optimalPath.join(' -> ')}
+            `;
+        }
+
+        solveTSP();
+    </script>
+
+</body>
+</html>

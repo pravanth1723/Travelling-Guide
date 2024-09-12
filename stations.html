@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Multiple Railway Stations</title>
+</head>
+
+<body>
+
+    <h1>Select Multiple Railway Stations</h1>
+
+    <!-- Source Station Selection -->
+    <label for="sourceStation">Select Source Station: </label>
+    <select id="sourceStation" onchange="handleSourceSelection()">
+        <option value="">Select a source station</option>
+    </select>
+
+    <br><br>
+
+    <!-- Input for number of stations -->
+    <label for="numStations">Enter number of stations to select: </label>
+    <input type="number" id="numStations" min="1" max="100" />
+    <button onclick="createDropdowns()">Submit</button>
+
+    <div id="stationDropdowns"></div>
+
+    <!-- Button to get selected stations -->
+    <button onclick="getSelectedStations()">Get Selected Stations</button>
+
+    <p>Selected Stations:</p>
+    <ul id="selectedStationsList"></ul>
+
+    <script>
+        const stations = [
+            "Agra Cantonment", "Ahmedabad Junction", "Ajmer Junction", "Akola Junction", "Ambala Cantonment Junction",
+            "Amritsar Junction", "Asansol Junction", "Aurangabad", "Bangalore City", "Bareilly Junction",
+            "Bhagalpur Junction", "Bhopal Junction", "Bhubaneswar", "Bhusaval Junction", "Bilaspur Junction",
+            "Chandigarh Junction", "Chennai Central", "Chhapra Junction", "Coimbatore Junction", "Cuttack Junction",
+            "Darbhanga Junction", "Dehradun", "Dhanbad Junction", "Durg Junction", "Ernakulam Junction",
+            "Erode Junction", "Gaya Junction", "Ghaziabad Junction", "Gorakhpur Junction", "Guntur Junction",
+            "Guwahati", "Gwalior Junction", "Haridwar Junction", "Hatia", "Hazur Sahib Nanded", "Howrah",
+            "Hubli Junction", "Indore Junction", "Jabalpur Junction", "Jaipur Junction", "Jalandhar City Junction",
+            "Jammu Tawi", "Jhansi Junction", "Jodhpur Junction", "Kanpur Central", "Katihar Junction",
+            "Katni Junction", "Katpadi Junction", "Kharagpur Junction", "Kollam Junction", "Kota Junction",
+            "Kozhikode", "Lucknow Charbagh", "Ludhiana Junction", "Madgaon Junction", "Madurai Junction",
+            "Malda Town", "Malkapur", "Mangalore Central", "Manmad Junction", "Mathura Junction", "Moradabad",
+            "Mumbai Central", "Muzaffarpur Junction", "Mysore Junction", "Nagpur Junction", "Nasik Road",
+            "Nellore", "New Delhi", "New Jalpaiguri Junction", "Palakkad Junction", "Patna Junction",
+            "Prayagraj Junction", "Pune Junction", "Pandit Deen Dayal Upadhyaya Junction", "Puri", "Raipur Junction",
+            "Rajahmundry", "Rajkot Junction", "Ranchi Junction", "Ratlam Junction", "Rourkela Junction",
+            "Salem Junction", "Satna Junction", "Secunderabad Junction", "Siwan Junction", "Solapur",
+            "Surat", "Tatanagar Junction", "Tiruchirappalli Junction", "Tirunelveli Junction", "Tirupati",
+            "Thrissur", "Thiruvananthapuram Central", "Udaipur City", "Ujjain Junction", "Vapi",
+            "Vadodara Junction", "Varanasi Junction", "Vijayawada Junction", "Visakhapatnam"
+        ];
+
+        // Array to store selected stations
+        let selectedStations = [];
+        let sourceStation = '';
+
+        // Populate the source station dropdown
+        window.onload = function () {
+            const sourceSelect = document.getElementById("sourceStation");
+            stations.forEach(station => {
+                const option = document.createElement('option');
+                option.value = station;
+                option.textContent = station;
+                sourceSelect.appendChild(option);
+            });
+        };
+
+        // Function to handle the selection of the source station
+        function handleSourceSelection() {
+            sourceStation = document.getElementById("sourceStation").value;
+            selectedStations = [];  // Clear previous selections
+            document.getElementById("stationDropdowns").innerHTML = '';  // Clear station dropdowns
+        }
+
+        // Function to create dropdowns excluding the source station
+        function createDropdowns() {
+            const numStations = document.getElementById("numStations").value;
+            const container = document.getElementById("stationDropdowns");
+
+            // Clear previous dropdowns if any
+            container.innerHTML = '';
+
+            if (!sourceStation) {
+                alert('Please select a source station first.');
+                return;
+            }
+
+            for (let i = 0; i < numStations; i++) {
+                const select = document.createElement('select');
+                select.setAttribute('class', 'stationDropdown');
+                select.setAttribute('data-index', i);
+
+                // Add an empty default option
+                const defaultOption = document.createElement('option');
+                defaultOption.textContent = 'Select a station';
+                defaultOption.value = '';
+                select.appendChild(defaultOption);
+
+                // Populate dropdown with station options, excluding the source station and already selected stations
+                stations.forEach(station => {
+                    if (station !== sourceStation && !selectedStations.includes(station)) {
+                        const option = document.createElement('option');
+                        option.value = station;
+                        option.textContent = station;
+                        select.appendChild(option);
+                    }
+                });
+
+                select.addEventListener('change', handleSelection);
+                container.appendChild(select);
+                container.appendChild(document.createElement('br'));  // Line break
+            }
+        }
+
+        // Function to handle station selection in the dropdowns
+        function handleSelection(event) {
+            const dropdown = event.target;
+            const selectedStation = dropdown.value;
+            const index = dropdown.getAttribute('data-index');
+
+            // If already selected, remove previous selection from array
+            const previouslySelectedStation = selectedStations[index];
+            if (previouslySelectedStation) {
+                selectedStations[index] = '';  // Clear old selection
+            }
+
+            // Update selectedStations array with the new selection
+            selectedStations[index] = selectedStation;
+
+            // Refresh the dropdowns to reflect the new selection
+            refreshDropdowns();
+        }
+
+        // Function to refresh the dropdown options after a change
+        function refreshDropdowns() {
+            const dropdowns = document.querySelectorAll('.stationDropdown');
+            dropdowns.forEach(dropdown => {
+                const currentValue = dropdown.value;
+                const index = dropdown.getAttribute('data-index');
+
+                // Clear current options
+                dropdown.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.textContent = 'Select a station';
+                defaultOption.value = '';
+                dropdown.appendChild(defaultOption);
+
+                // Add available stations excluding already selected and source station
+                stations.forEach(station => {
+                    if (station !== sourceStation && (!selectedStations.includes(station) || selectedStations[index] === station)) {
+                        const option = document.createElement('option');
+                        option.value = station;
+                        option.textContent = station;
+                        if (station === currentValue) {
+                            option.selected = true;  // Keep the selected station as selected
+                        }
+                        dropdown.appendChild(option);
+                    }
+                });
+            });
+        }
+
+        // Function to get and display the selected stations
+        function getSelectedStations() {
+            const selectedStationsList = document.getElementById('selectedStationsList');
+            selectedStationsList.innerHTML = '';  // Clear previous list
+
+            selectedStations.forEach(station => {
+                if (station) {
+                    const li = document.createElement('li');
+                    li.textContent = station;
+                    selectedStationsList.appendChild(li);
+                }
+            });
+
+            console.log('Source Station:', sourceStation);
+            // alert(sourceStation);
+            console.log('Selected Stations:', selectedStations.filter(Boolean));  // Log selected stations excluding empty ones
+            const data = JSON.stringify({
+                route: [
+                    {
+                        country: 'IND',
+                        name: 'Delhi'
+                    },
+                    {
+                        country: 'IND',
+                        name: 'Hyderabad'
+                    }
+                ]
+            });
+
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener('readystatechange', function () {
+                if (this.readyState === this.DONE) {
+                    console.log(this.responseText);
+                }
+            });
+
+            xhr.open('POST', 'https://distanceto.p.rapidapi.com/distance/route');
+            xhr.setRequestHeader('x-rapidapi-key', '62cc8e3931msh820767f923ddc00p17a491jsn29d9f9066294');
+            xhr.setRequestHeader('x-rapidapi-host', 'distanceto.p.rapidapi.com');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.send(data);
+        }
+    </script>
+
+</body>
+
+</html>

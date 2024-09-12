@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Plan Your Trip</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="mainjs.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+	<h1>Plan your Trip !!!</h1>
+
+	<!-- Source Station Selection -->
+	<div>
+
+		<label for="sourceStation">Select Source City: </label>
+		<select id="sourceStation" onchange="handleSourceSelection()">
+			<option value="">Select a source city</option>
+		</select>
+		<br><br>
+	</div>
+	<div>
+
+		<label for="dateInput">Select Journey Start Date:</label>
+		<input type="date" id="dateInput" name="dateInput">
+	</div>
+	<br><br>
+
+	<!-- Time Input -->
+	<div>
+
+		<label for="timeInput">Select Start Time:</label>
+		<input type="time" id="timeInput" name="timeInput">
+	</div>
+	<br><br>
+	<br><br>
+
+	<!-- Input for number of stations -->
+	<div>
+
+		<label for="numStations">Enter number of Cities you want to visit: </label>
+		<input type="number" id="numStations" min="1" max="100" />
+		<button onclick="createDropdowns()">Submit</button>
+	</div>
+	<div id="spinner" class="spinner" style="display: none;"></div>
+	<div id="stationDropdowns"></div>
+	<!-- Button to get selected stations -->
+	<button onclick="getSelectedStations()">Get Selected Cities</button>
+
+	<h1>Selected Cities:</h1>
+	<ul id="selectedStationsList"></ul>
+	<button onclick="cal()">Calculate shortest path</button>
+	<h1>Route and Timing</h1>
+	<div id="route">
+	</div>
+	<button onclick="printhotels()">Hotels</button>
+	<h1>Hotels List </h1>
+	<ul id="cityHotelsList"></ul>
+	<div id="est">
+		<div>
+
+			<label for="milage">Mileage of your vehicle</label>
+			<input type="number" placeholder="mileage" name="milage" id="milage">
+			<br>
+		</div>
+		<div>
+
+			<label for="persons">No.of Persons</label>
+			<input type="number" placeholder="no.of persons" name="persons" id="persons">
+			<br>
+		</div>
+		<button onclick="costdetails()">Get cost Estimation</button>
+	</div>
+	<div id="details">
+
+	</div>
+	<button onclick="maps()">
+		Map view
+	</button>
+</body>
+</html>

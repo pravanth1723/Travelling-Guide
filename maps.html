@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distance API Example</title>
+</head>
+<body>
+    <h1>Get Distance between Cities</h1>
+
+    <!-- Button to trigger the API request -->
+    <button id="getDistanceBtn">Get Distance</button>
+
+    <!-- Section to display the result -->
+    <h3>API Response:</h3>
+    <pre id="apiResponse"></pre>
+
+    <script>
+        document.getElementById('getDistanceBtn').addEventListener('click', () => {
+            fetch('https://distanceto.p.rapidapi.com/distance/route/detailed', {
+                method: 'POST',
+                mode: 'no-cors', // This avoids CORS errors but gives an opaque response
+                headers: {
+                    'x-rapidapi-key': '62cc8e3931msh820767f923ddc00p17a491jsn29d9f9066294',
+                    'x-rapidapi-host': 'distanceto.p.rapidapi.com',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    route: [
+                        { country: 'POR', name: 'Lisboa' },
+                        { country: 'FRA', name: 'Paris' }
+                    ]
+                })
+            })
+            .then(response => {
+                // Since mode 'no-cors' gives an opaque response, you'll not get the actual data.
+                // Here we're just displaying the response object itself
+                document.getElementById('apiResponse').textContent = 'Response received, but cannot access details due to CORS restrictions';
+                console.log(response);  // Log the response object
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('apiResponse').textContent = 'Error: ' + error.message;
+            });
+        });
+    </script>
+</body>
+</html>
