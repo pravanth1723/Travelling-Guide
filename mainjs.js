@@ -173,7 +173,7 @@ function getSelectedStations() {
             url: 'https://distanceto.p.rapidapi.com/distance/route/detailed',
             method: 'POST',
             headers: {
-                'x-rapidapi-key': '278eb095b0msh7dda698adde577ap1a5816jsna299d4193015',
+                'x-rapidapi-key': '33969e7105mshebd0b284f273777p140b4ejsn0f33ce9280dc',
                 'x-rapidapi-host': 'distanceto.p.rapidapi.com',
                 'Content-Type': 'application/json'
             },
@@ -320,7 +320,7 @@ function cal() {
                 url: `https://tripadvisor16.p.rapidapi.com/api/v1/hotels/searchLocation?query=${selectedStations[optimalPath[i]]}`,
                 method: 'GET',
                 headers: {
-                    'x-rapidapi-key': '278eb095b0msh7dda698adde577ap1a5816jsna299d4193015',
+                    'x-rapidapi-key': '33969e7105mshebd0b284f273777p140b4ejsn0f33ce9280dc',
                     'x-rapidapi-host': 'tripadvisor16.p.rapidapi.com'
                 }
             };
@@ -354,7 +354,7 @@ function printhotels() {
             url: `https://tripadvisor16.p.rapidapi.com/api/v1/hotels/searchHotels?geoId=${locationids[i]}&checkIn=2024-10-20&checkOut=2024-10-22&pageNumber=1&currencyCode=INR`,
             method: 'GET',
             headers: {
-                'x-rapidapi-key': '278eb095b0msh7dda698adde577ap1a5816jsna299d4193015',
+                'x-rapidapi-key': '33969e7105mshebd0b284f273777p140b4ejsn0f33ce9280dc',
                 'x-rapidapi-host': 'tripadvisor16.p.rapidapi.com'
             }
         };
