@@ -366,7 +366,7 @@ function printhotels() {
             const hostelhtml = document.getElementById('cityHotelsList');
             var cityLi = document.createElement('ul');
             var tem = document.createElement('li');
-            tem.textContent = selectedStations[optimalPath[i + 1]];
+            tem.textContent = 'Hotels';
             cityLi.appendChild(tem);
             // hostelhtml.appendChild(cityLi);
             console.log(selectedStations[optimalPath[i + 1]]);
